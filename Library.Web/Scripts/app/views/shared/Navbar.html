@@ -1,0 +1,64 @@
+﻿<div class="navbar navbar-fixed-top">
+    <div class="container navbar-inverse">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#/BookAuthors" class="navbar-brand">
+                <i class="icon-globe"></i>
+                <span class="aInNavbarIndent">Library</span>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#/Users">
+                        <i class="icon-group"></i>
+                        <span class="aInNavbarIndent">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/Authors">
+                        <i class="icon-edit"></i>
+                        <span class="aInNavbarIndent">Authors</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <input id="textSearch" placeholder="Search..." type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row textColorWhite">
+                                <i class="icon-book"></i>
+                                <span>All books:</span>
+                                <span>365</span>
+                            </div>
+                            <div class="row decorationUnderline ">
+                                <a class="textColorDarkGray colorWhiteOnHover" href="#/UserBooks">
+                                    <i class="icon-hand-up"></i>
+                                    <span>On hands:</span>
+                                    <span>25</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li id="AccountLinkIndent" class="madeBorderWhite">
+                    <a href="#/Account">
+                        <i class="icon-lightbulb"></i>
+                        Account
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div data-ng-include src="'/Scripts/app/views/shared/Alerts.html'"></div>
+    </div>
+</div>
+
+
+

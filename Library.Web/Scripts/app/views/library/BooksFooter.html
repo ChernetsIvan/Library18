@@ -1,0 +1,93 @@
+﻿<div class="navbar navbar-fixed-bottom">
+    <div class="container" style="background-color: darkgrey">
+        <div class="navbar-brand">
+            <div data-ng-show="!vm.showAddBookFields">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Add new book:</label>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-default" data-ng-click="vm.showAddFields()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-show="vm.showAddBookFields">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label>Title:</label>
+                            <input type="text" class="form-control formControlWidthMore" data-ng-model="vm.newBookTitle">
+                        </div>
+                        <div class="col-md-5">
+                            <label>
+                                Authors:
+                                
+                            </label>
+                            <div class="inlineBlockDisplay newBookAuthorsDiv" data-ng-repeat="author in vm.newBookAuthors">
+                                <pre class="inlineDisplay">{{author.Name}}</pre>
+                                <i class="icon-remove inlineDisplay cursorPointer" data-ng-click="vm.deleteSelectedAuthor(author.AuthorId)"></i>
+                            </div>
+                            <!--<input type="text" class="form-control formControlWidthMore" data-ng-model="vm.newBookAuthors">-->
+                            <br />
+                            <input type="text"
+                                   ng-model="vm.oneAddedAuthor"
+                                   typeahead="typeAheadAuthors.Name for typeAheadAuthors in vm.getFilteredAuthors($viewValue)"
+                                   typeahead-editable="true"
+                                   typeahead-loading="loadingAuthors" class="form-control formControlWidthMore"
+                                   typeahead-on-select="vm.addSelectedAuthor($item)" />
+                            <i id="typeAheadLoadingImg" data-ng-if="vm.showTypeAheadLoadingImg" class="glyphicon glyphicon-refresh"></i>
+
+
+                        </div>
+                    </div>
+                    <div class="row topLittleIndent">
+                        <div class="col-md-offset-1 col-md-3">
+                            <label>Isbn:</label>
+                            <input type="text" id="isbnInputText" class="form-control formControlWidthMore" data-ng-model="vm.newBookIsbn">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Year:</label>
+                            <input type="text" id="yearInputText" class="form-control formControlWidthMore" data-ng-model="vm.newBookYear">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Amount of pages:</label>
+                            <input type="text" id="amountInputText" class="form-control formControlWidthMore" data-ng-model="vm.newBookPagesAmount">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Amount of books:</label>
+                            <input type="text" id="amountInputText" class="form-control formControlWidthMore" data-ng-model="vm.newBookBookAmount">
+                        </div>
+                    </div>
+                    <div class="row topLittleIndent">
+                        <div class="col-md-6 col-md-offset-1">
+                            <label>Publishing house:</label>
+                            <input type="text" class="form-control formControlWidthMore" data-ng-model="vm.newBookPublishingHouse">
+                        </div>
+
+                    </div>
+                    <div class="row topLittleIndent">
+                        <div class="col-md-5 col-md-offset-1">
+                            <label>Description:</label>
+                            <textarea id="descriptionTextArea" class="form-control formControlWidthMore" data-ng-model="vm.newBookDescription"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Book image preview:</label>
+                            <img src="" id="bookImagePreview" class="form-control formControlWidthMore" data-ng-model="vm.newBookDescription"></img>
+                            <button id="loadImageBookIndent" class="btn btn-default">Load...</button>
+                        </div>
+                    </div>
+                    <div class="row topLittleIndent">
+                        <div class="col-md-offset-2 col-md-1">
+                            <button class="btn btn-default" data-ng-click="vm.addBook()">Add</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-default" data-ng-click="vm.cancelAddNewBook()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

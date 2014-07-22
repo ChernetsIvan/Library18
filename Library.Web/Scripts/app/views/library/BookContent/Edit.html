@@ -1,0 +1,14 @@
+﻿<div class="row" data-ng-show="vm.userActionsBtns.editBookBtn">
+    <div class="row">
+        <div class="col-md-11 col-md-offset-1">
+            <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newBookTitle" placeholder="Title">
+            <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newBookIsbn" placeholder="Isbn">
+            <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newBookYear" placeholder="Year">
+            <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newBookDescription" placeholder="Description">
+            <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newBookPagesAmount" placeholder="Amount of pages">
+            <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newBookPublishingHouse" placeholder="Publishing house">
+            <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newBookBookAmount" placeholder="Amount of books">
+            <button class="btn btn-default" data-ng-click="vm.updateBook()">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿<div data-ng-controller="bookFullController as vm" data-ng-init="vm.init()">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-4">
+                <h2>
+                    Books
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <hr />
+                <div class="slowly-show-hide" ng-show="vm.contentIsLoaded">
+                    <accordion close-others="true">
+                        <accordion-group data-ng-repeat="b in vm.books">
+                            <accordion-heading>
+                                <div data-ng-click="vm.changeSelectedRow($index)">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <i class="icon-user icon-2x"></i>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <span id="authorHeader" class="cursorPointer markerFont">{{b.Title}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </accordion-heading>
+                            <div data-ng-include src="'/Scripts/app/views/library/BookContent/Main.html'"></div>
+                        </accordion-group>
+                    </accordion>
+                </div>
+            </div>
+        </div>
+        <div data-ng-include src="'/Scripts/app/views/library/BooksFooter.html'"></div>
+    </div>
+</div>
+
+
+
+

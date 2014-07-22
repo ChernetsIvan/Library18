@@ -1,0 +1,38 @@
+﻿<div>
+    <div class="row contentBtnsIndent">
+        <div class="col-md-12">
+            <div class="btn-group">
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.detailsBtn" btn-radio="'Details'" data-ng-click="vm.showDetails()" uncheckable>
+                    <i class="icon-list-ol icon-2x"></i><br />
+                    Details
+                </label>
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.takeBookBtn" btn-radio="'Take book'" data-ng-click="vm.showTakeBookFields()" uncheckable>
+                    <i class="icon-pencil icon-2x"></i><br />
+                    Take book
+                </label>
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.giveBookBtn" btn-radio="'Give book'" data-ng-click="vm.showGiveBookFields()" uncheckable>
+                    <i class="icon-trash icon-2x"></i><br />
+                    Give book
+                </label>
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.qrBtn" btn-radio="'QR'" data-ng-click="vm.showQr()" uncheckable>
+                    <i class="icon-list-ol icon-2x"></i><br />
+                    QR
+                </label>
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.editBookBtn" btn-radio="'Edit book'" data-ng-click="vm.showEditFields()" uncheckable>
+                    <i class="icon-pencil icon-2x"></i><br />
+                    Edit book
+                </label>
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.deleteBookBtn" btn-radio="'Delete book'" data-ng-click="vm.showDeleteConfirm()" uncheckable>
+                    <i class="icon-trash icon-2x"></i><br />
+                    Delete book
+                </label>
+            </div>
+        </div>
+    </div>
+    <div data-ng-include src="'/Scripts/app/views/library/BookContent/Details.html'"></div>
+    <div data-ng-include src="'/Scripts/app/views/library/BookContent/Take.html'"></div>
+    <div data-ng-include src="'/Scripts/app/views/library/BookContent/Give.html'"></div>
+    <div data-ng-include src="'/Scripts/app/views/library/BookContent/Qr.html'"></div>
+    <div data-ng-include src="'/Scripts/app/views/library/BookContent/Edit.html'"></div>
+    <div data-ng-include src="'/Scripts/app/views/library/BookContent/Delete.html'"></div>
+</div>

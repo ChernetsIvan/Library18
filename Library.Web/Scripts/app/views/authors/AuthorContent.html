@@ -1,0 +1,43 @@
+﻿<div>
+    <div class="row contentBtnsIndent">
+        <div class="col-md-10 col-md-offset-2">
+            <div class="btn-group">
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.bookListBtn" btn-radio="'Author\'s list of books'" data-ng-click="vm.loadBookList()" uncheckable>
+                    <i class="icon-list-ol icon-2x"></i><br />
+                    Author's list of books
+                </label>
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.editBtn" btn-radio="'Edit author'" data-ng-click="vm.showEditFields()" uncheckable>
+                    <i class="icon-pencil icon-2x"></i><br />
+                    Edit author
+                </label>
+                <label class="btn btn-default" ng-model="vm.userActionsBtns.deleteBtn" btn-radio="'Delete author'" data-ng-click="vm.showDeleteConfirm()" uncheckable>
+                    <i class="icon-trash icon-2x"></i><br />
+                    Delete author
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row" data-ng-show="vm.userActionsBtns.bookListBtn">        
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+                List of author's books will be here
+            </div>
+        </div>
+    </div>
+    <div class="row" data-ng-show="vm.userActionsBtns.editBtn">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+                <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.updateAuthorName">
+                <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.updateAuthorLastName">
+                <button class="btn btn-default" data-ng-click="vm.updateAuthor()">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="row" data-ng-show="vm.userActionsBtns.deleteBtn">       
+        <div class="row">
+            <div class="col-md-8 col-md-offset-4">
+                <button class="btn btn-default madeElementRed" data-ng-click="vm.deleteSelectedAuthor()">I really want to delete this author</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+﻿<div data-ng-controller="accountController as vm">
+    <h3> Test login/</h3>
+    <div>
+        <span data-ng-show="vm.isRegistered">User Registered Successfully</span><br />
+        <span data-ng-show="vm.isLoggedIn">Hello : {{vm.userName}}</span><br />
+        <span data-ng-show="vm.isLoggedIn">Your Bearer Token is : {{vm.bearerToken}}</span>
+    </div>
+    <br />
+    <div>
+        <input type="text" name="userName" placeholder="Name" data-ng-model="vm.userData.userName" />
+        <input name="password" placeholder="Password" data-ng-model="vm.userData.password" />
+        <input name="confirmPassword" placeholder="Password" data-ng-model="vm.userData.confirmPassword" />
+        <input type="button" id="registerUser" value="Register" data-ng-click="vm.registerUser()" />
+        <input type="button" id="logniUser" value="Login" data-ng-click="vm.loginUser()" />
+    </div>
+</div>

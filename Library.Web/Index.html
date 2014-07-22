@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Library</title>
+
+        <link href="Content/Site.css" rel="stylesheet" type="text/css" />
+        <link href="Content/bootstrap/bootstrap.css" rel="stylesheet" type="text/css" />
+        <!--<link href="Content/jquery-ui/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />-->
+        <!--<link href="Content/nggrid/ng-grid.css" rel="stylesheet" type="text/css" />-->
+        <!--<link href="Content/jtable/themes/metro/darkgray/jtable.css" rel="stylesheet" type="text/css" />-->
+        <link href="Content/font-awesome/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <link href="Content/angular-loading-bar/loading-bar.css" rel="stylesheet" type="text/css"/>
+    </head>
+<body>
+    <div data-ng-include src="'/Scripts/app/views/shared/Navbar.html'"></div>
+
+    <div id="loadingDiv" data-ng-include src="'/Scripts/app/views/shared/LoadingStatus.html'"></div>
+
+    <div class="container body-content">
+        <div ng-view></div>
+    </div>
+
+    <script src="Scripts/libs/jquery/jquery-2.1.1.js"></script>
+    <!--<script src="Scripts/libs/jquery-ui/jquery-ui-1.10.4.js"></script>-->
+    <!--<script src="Scripts/libs/jtable/jquery.jtable.js"></script>-->
+    <!--<script src="Scripts/libs/ng-grid/ng-grid.js"></script>-->
+    <script src="Scripts/libs/angular/angular.js"></script>
+    <script src="Scripts/libs/angular/angular-cookies.js"></script>
+    <script src="Scripts/libs/angular/angular-route.js"></script>
+    <script src="Scripts/libs/angular/angular-animate.js"></script>
+    <script src="Scripts/libs/angular-ui/ui-bootstrap.js"></script>
+    <script src="Scripts/libs/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="Scripts/libs/angular-loading-bar/loading-bar.js"></script>
+    <script src="Scripts/app/app.js"></script>
+    <script src="Scripts/app/controllers/accountController.js"></script>
+    <script src="Scripts/app/controllers/authorController.js"></script>
+    <script src="Scripts/app/controllers/alertController.js"></script>
+    <script src="Scripts/app/controllers/loadingStatusController.js"></script>
+    <script src="Scripts/app/controllers/bookFullController.js"></script>
+    <script src="Scripts/app/services/authorService.js"></script>
+    <script src="Scripts/app/services/accountService.js"></script>
+    <script src="Scripts/app/services/alertService.js"></script>
+    <script src="Scripts/app/services/loadingStatusService.js"></script>
+    <script src="Scripts/app/services/bookService.js"></script>
+    <script src="Scripts/app/utility/guidGenerator.js"></script>
+    <script src="Scripts/app/utility/strReprs.js"></script>
+    <script src="Scripts/app/utility/serverBase.js"></script>
+    <script src="Scripts/app/utility/tokenCurator.js"></script>
+    <script src="Scripts/app/utility/errorsHandler.js"></script>
+</body>
+</html>

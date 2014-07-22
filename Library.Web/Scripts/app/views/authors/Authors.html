@@ -1,0 +1,66 @@
+﻿<div data-ng-controller="authorController as vm" data-ng-init="vm.getAuthors()">
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-offset-4">
+                <h2>
+                    Authors
+                </h2>               
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-6 col-md-offset-3">
+                <hr />                
+                <div class="slowly-show-hide" ng-show="vm.contentIsLoaded">
+                    <accordion close-others="true">
+                        <accordion-group data-ng-repeat="a in vm.authors">
+                            <accordion-heading>
+                                <div data-ng-click="vm.changeSelectedRow($index)">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <i class="icon-user icon-2x"></i>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <span id="authorHeader" class="cursorPointer markerFont">{{a.Name}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </accordion-heading>
+                            <div data-ng-include src="'/Scripts/app/views/authors/AuthorContent.html'"></div>
+                        </accordion-group>
+                    </accordion>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div>
+                    <pagination items-per-page="vm.paginationPageSize" total-items="vm.paginationTotalItems"
+                                ng-model="vm.paginationCurrentPage" max-size="vm.paginationMaxSizeOfVisPage"
+                                class="pagination-sm" boundary-links="true" rotate="true" num-pages="numPages"
+                                next-text=">" previous-text="<" ng-change="vm.getAuthors()"></pagination>
+                </div>              
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <span class="col-md-offset-4">Page: {{vm.paginationCurrentPage}} / {{numPages}}</span>
+            </div>          
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-7">
+                <span class="col-md-offset-4">Total authors: {{vm.paginationTotalItems}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <hr />
+                <p>
+                    <label>Add new author: </label>
+                    <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newAuthorName" placeholder="Name">
+                    <input type="text" class="form-control formControlWidthLess" data-ng-model="vm.newAuthorLastName" placeholder="LastName">
+                    <button class="btn btn-default" data-ng-click="vm.addAuthor()">Add</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

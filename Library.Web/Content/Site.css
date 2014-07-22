@@ -1,0 +1,255 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.h3AccordionHeader {
+    padding: 0.25em !important;
+    font-size: 1.5em !important;
+}
+
+/*my*/
+
+#buttonLoading {
+    margin-top: 1em;
+    width: 20em;
+}
+
+.buttonGive, .buttonTake, .buttonTakeBack{
+    margin-bottom: 0.5em !important;
+    width: 8em !important;
+}
+
+#divBookInfo a{
+    color: #0094DE;
+    text-decoration: none;
+}
+#divBookInfo a :visited {
+    text-decoration: none;
+    color: #0094DE;
+}
+#divBookInfo a :hover {
+text-decoration: underline;
+color: #DD127B;
+
+}
+
+#textSearch {
+    width: 20em;
+    margin: 0.5em;
+}
+
+#divPlaceToAccordion {
+    margin-top: 0.5em;
+}
+
+.textColorDarkGray {
+    color:darkgray
+}
+
+.textColorWhite {
+    color:white
+}
+.cursorPointer {
+    cursor: pointer;
+}
+
+/*.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 400px; 
+    height: 300px
+}*/
+
+/*.fadeVisible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+.fadeHidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}*/
+
+#alertsIndent {
+    margin-top: 1em;
+}
+
+#loadingStatusGifIndent {
+    margin-top: 15em;
+}
+
+@font-face {
+    font-family: MarkerFont;
+    src: url('fonts/Marker_SD.ttf');
+}
+
+#authorHeader {
+    font-size: 2em;
+}
+
+#loadingDiv {
+    top: 10%;
+    left: 50%;
+    position: fixed;
+    z-index: 1032;
+}
+
+/*Animation - fade in / fade out */
+.slowly-show-hide {
+    display:block!important;
+}
+
+.slowly-show-hide {
+  -webkit-transition:all linear 1.5s;
+  -moz-transition: all linear 1.5s;
+  -o-transition: all linear 1.5s;
+  transition:all linear 1.5s;
+}
+
+.slowly-show-hide.ng-hide {
+  opacity:0;
+}
+
+.fast-show-hide {
+    display:block!important;
+}
+
+.fast-show-hide {
+  -webkit-transition:all linear 0.8s;
+  -moz-transition: all linear 0.8s;
+  -o-transition: all linear 0.8s;
+  transition:all linear 0.8s;
+}
+
+.fast-show-hide.ng-hide {
+  opacity:0;
+}
+
+.formControlWidthLess {
+    display: initial !important;
+    width: 13em !important;
+}
+
+.formControlWidthMore {
+    display: initial !important;
+    width: 50em !important;
+}
+
+.contentBtnsIndent {
+    margin-bottom: 1em;
+}
+
+.madeElementRed:hover {
+    border-color: red !important;
+}
+
+#AccountLinkIndent {
+    margin-left: 15em;
+}
+
+.aInNavbarIndent {
+    margin-left: 0.3em;
+}
+
+.colorWhiteOnHover:hover {
+    color: white;
+}
+
+.markerFont {
+    font-family: MarkerFont;
+}
+
+.decorationUnderline {
+    text-decoration: underline;
+}
+
+#descriptionTextArea {
+    width: 30em;
+    height: 10em;
+}
+
+#isbnInputText {
+    width: 14em !important;
+}
+
+#yearInputText {
+    width: 5em !important;
+}
+
+#bookImagePreview {
+    width: 8em !important;
+    height: 10em !important;
+}
+
+#amountInputText {
+    width: 5em !important;
+}
+
+.topLittleIndent {
+    margin-top: 0.5em !important;
+}
+
+.rightLittleIndent {
+    margin-right: 1em !important;
+}
+
+
+#loadImageBookIndent {
+    margin-left: 1em;
+}
+
+#typeAheadLoadingImg {
+    display: initial !important;
+}
+
+.inlineBlockDisplay {
+    display:inline-block !important;
+}
+
+.inlineDisplay {
+    display:inline !important;
+}
+
+.newBookAuthorsDiv {
+    margin-right: 1em !important;
+    margin-bottom: 1em !important;
+}

@@ -1,0 +1,18 @@
+﻿<div ng-controller="alertController" data-ng-init="init()">
+    <div id="alertsIndent">
+        <div ng-repeat="alert in alerts">
+            <div class="fast-show-hide" data-ng-show="isBeginShowHideAnimation(alert.id)">
+                <alert type="{{alert.type}}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10">{{alert.msg}}</div>
+                            <div class="col-md-1">
+                                <a class="cursorPointer" data-ng-click="closeAlert(alert.id)">Close({{alert.timerSec/1000 | number:0}})</a>
+                            </div>
+                        </div>
+                    </div>
+                </alert>
+            </div>
+        </div>
+    </div>
+</div>
