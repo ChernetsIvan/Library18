@@ -1,0 +1,4 @@
+BenqMsServer
+NT Service\MSSQL$BENQMSSERVER
+login:    admin
+password: 654321
