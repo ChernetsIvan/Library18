@@ -35,49 +35,7 @@ namespace Library.API.Controllers
         {
             try
             {
-                IEnumerable<Book> books = _bookService.GetBooks(startIndex, pageSize, sorting);
-                var bookAuthors = from b in books  //count of bookAuthors may be not equals count of books!
-                                  join ba in _bookAuthorService.GetBookAuthors() on b.BookId equals ba.BookId
-                                  select new BookAuthor
-                                  {
-                                      BookAuthorId = ba.BookAuthorId,
-                                      BookId = ba.BookId,
-                                      AuthorId = ba.AuthorId
-                                  };
-                var bookAmounts = from b in books
-                                  join ba in _bookAmountService.GetBookAmounts() on b.BookId equals ba.BookId
-                                  select new BookAmount
-                                  {
-                                      BookAmountId = ba.BookAmountId,
-                                      BookId = ba.BookId,
-                                      Amount = ba.Amount
-                                  };
-                var fullBookVms = from b in books
-                                  join ba in bookAmounts on b.BookId equals ba.BookId
-                                  select new FullBookViewModel
-                                  {
-                                      BookId = b.BookId,
-                                      Title = b.Title,
-                                      Isbn = b.Isbn,
-                                      Year = b.Year,
-                                      Description = b.Description,
-                                      PagesAmount = b.PagesAmount,
-                                      PublishingHouse = b.PublishingHouse,
-                                      BookAmount = ba.Amount,
-                                      Authors = new List<AuthorViewModel>()
-                                  };
-                //List<FullBookViewModel> fullBookVms2 = fullBookVms.Distinct().ToList();
-                foreach (var fullBookVm in fullBookVms)
-                {
-                    fullBookVm.Authors.AddRange(_bookAuthorService.GetAuthorsByBookId(fullBookVm.BookId).Select(Mapper.Map<Author, AuthorViewModel>).ToList());
-                    //foreach (var ba in bookAuthors)
-                    //{
-                    //    if (ba.BookId == fullBookVm.BookId)
-                    //    {
-                    //        fullBookVm.Authors.Add(Mapper.Map<Author, AuthorViewModel>(_bookAuthorService.GetAuthorByBookId(ba.BookId)));
-                    //    }
-                    //}
-                }
+                var fullBookVms = GetFullBookVms(startIndex, pageSize, sorting);
                 return Json(new { Result = StrReprs.OK, Records = fullBookVms, TotalRecordCount = fullBookVms.Count() });
             }
             catch (Exception ex)
@@ -93,11 +51,11 @@ namespace Library.API.Controllers
                 if (!User.IsInRole(StrReprs.Admin))
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = StrReprs.AddNewRecordsCanOnlyAdmins });
-                } 
+                }
                 if (!ModelState.IsValid)
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = GetErrorsFromModelState() });
-                }                              
+                }
                 Book book = Mapper.Map<FullBookViewModel, Book>(fullBookVm);
                 string id = _bookService.CreateBook(book);
                 fullBookVm.BookId = id;
@@ -112,7 +70,7 @@ namespace Library.API.Controllers
         public IHttpActionResult Put(AuthorViewModel authorVm)
         {
             try
-            { 
+            {
                 if (!User.IsInRole(StrReprs.Admin))
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = StrReprs.UpdateRecordsCanOnlyAdmins });
@@ -120,7 +78,7 @@ namespace Library.API.Controllers
                 if (!ModelState.IsValid)
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = GetErrorsFromModelState() });
-                }               
+                }
                 Author author = Mapper.Map<AuthorViewModel, Author>(authorVm);
                 _authorService.UpdateAuthor(author);
                 return Json(new { Result = StrReprs.OK });
@@ -152,6 +110,54 @@ namespace Library.API.Controllers
         {
             return ModelState.Values.SelectMany(modelState => modelState.Errors)
                 .Aggregate("", (current, error) => current + (" • " + error.ErrorMessage + "  "));
+        }
+
+        public IEnumerable<FullBookViewModel> GetFullBookVms(int startIndex = 0, int pageSize = 0, string sorting = null)
+        {
+            IEnumerable<Book> books = _bookService.GetBooks(startIndex, pageSize, sorting);
+            var bookAuthors = from b in books  //count of bookAuthors may be not equals count of books!
+                              join ba in _bookAuthorService.GetBookAuthors() on b.BookId equals ba.BookId
+                              select new BookAuthor
+                              {
+                                  BookAuthorId = ba.BookAuthorId,
+                                  BookId = ba.BookId,
+                                  AuthorId = ba.AuthorId
+                              };
+            var bookAmounts = from b in books
+                              join ba in _bookAmountService.GetBookAmounts() on b.BookId equals ba.BookId
+                              select new BookAmount
+                              {
+                                  BookAmountId = ba.BookAmountId,
+                                  BookId = ba.BookId,
+                                  Amount = ba.Amount
+                              };
+            var fullBookVms = from b in books
+                              join ba in bookAmounts on b.BookId equals ba.BookId
+                              select new FullBookViewModel
+                              {
+                                  BookId = b.BookId,
+                                  Title = b.Title,
+                                  Isbn = b.Isbn,
+                                  Year = b.Year,
+                                  Description = b.Description,
+                                  PagesAmount = b.PagesAmount,
+                                  PublishingHouse = b.PublishingHouse,
+                                  BookAmount = ba.Amount,
+                                  Authors = new List<AuthorViewModel>()
+                              };
+            //List<FullBookViewModel> fullBookVms2 = fullBookVms.Distinct().ToList();
+            foreach (var fullBookVm in fullBookVms)
+            {
+                fullBookVm.Authors.AddRange(_bookAuthorService.GetAuthorsByBookId(fullBookVm.BookId).Select(Mapper.Map<Author, AuthorViewModel>).ToList()); //не работает
+                //foreach (var ba in bookAuthors)
+                //{
+                //    if (ba.BookId == fullBookVm.BookId)
+                //    {
+                //        fullBookVm.Authors.Add(Mapper.Map<Author, AuthorViewModel>(_bookAuthorService.GetAuthorByBookId(ba.BookId)));
+                //    }
+                //}
+            }
+            return fullBookVms;
         }
 
         //private IEnumerable<BookAuthorViewModel> GetBookAuthorVms(int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null, string jtFiltering = null)
@@ -188,10 +194,10 @@ namespace Library.API.Controllers
         //    }
 
 
-            
+
         //    foreach (BookAuthor ba in bookAuthors)
         //    {
-                
+
         //    }
 
         //    BookAuthorViewModel.Sorting(ref bookAuthorVms, jtSorting);
