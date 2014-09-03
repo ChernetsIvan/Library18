@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using AutoMapper;
 using Library.API.Utility;
 using Library.API.ViewModels;
-using Library.Model.Models;
 using Library.Service;
 
 namespace Library.API.Controllers
@@ -18,50 +17,18 @@ namespace Library.API.Controllers
 
         private readonly IBookService _bookService;
         private readonly IAuthorService _authorService;
-        private readonly IBookAuthorService _bookAuthorService;
-        private readonly IBookQrCodeService _bookQrCodeService;
-        private readonly IBookAmountService _bookAmountService;
 
-        public BookController(IBookService bookService, IAuthorService authorService, IBookAuthorService bookAuthorService, IBookQrCodeService bookQrCodeService, IBookAmountService bookAmountService)
+        public BookController(IBookService bookService, IAuthorService authorService)
         {
             _bookService = bookService;
             _authorService = authorService;
-            _bookAuthorService = bookAuthorService;
-            _bookQrCodeService = bookQrCodeService;
-            _bookAmountService = bookAmountService;
         }
 
         public IHttpActionResult Get(int startIndex = 0, int pageSize = 0, string sorting = null)
         {
             try
             {
-                IEnumerable<Book> books = _bookService.GetBooks(startIndex, pageSize, sorting);
-                var bookAmounts = from b in books
-                                  join ba in _bookAmountService.GetBookAmounts() on b.BookId equals ba.BookId
-                                  select new BookAmount
-                                  {
-                                      BookAmountId = ba.BookAmountId,
-                                      BookId = ba.BookId,
-                                      Amount = ba.Amount
-                                  };
-                var fullBookVms = from b in books
-                                  join ba in bookAmounts on b.BookId equals ba.BookId
-                                  select new FullBookViewModel
-                                  {
-                                      BookId = b.BookId,
-                                      Title = b.Title,
-                                      Isbn = b.Isbn,
-                                      Year = b.Year,
-                                      Description = b.Description,
-                                      PagesAmount = b.PagesAmount,
-                                      PublishingHouse = b.PublishingHouse,
-                                      BookAmount = ba.Amount,
-                                      Authors = new List<AuthorViewModel>()
-                                  };
-                foreach (var fullBookVm in fullBookVms)
-                {
-                    fullBookVm.Authors.AddRange(_bookAuthorService.GetAuthorsByBookId(fullBookVm.BookId).Select(Mapper.Map<Author, AuthorViewModel>).ToList()); //не работает
-                }
+
                 return Json(new { Result = StrReprs.OK, Records = fullBookVms, TotalRecordCount = fullBookVms.Count() });
             }
             catch (Exception ex)
@@ -70,7 +37,7 @@ namespace Library.API.Controllers
             }
         }
 
-        public IHttpActionResult Post([FromBody]FullBookViewModel fullBookVm) //частично реализован!!!!!!!!!!!!!
+        public IHttpActionResult Post([FromBody]BookViewModel bookVm) //частично реализован!!!!!!!!!!!!!
         {
             try
             {
@@ -82,10 +49,10 @@ namespace Library.API.Controllers
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = GetErrorsFromModelState() });
                 }
-                Book book = Mapper.Map<FullBookViewModel, Book>(fullBookVm);
+                Book book = Mapper.Map<BookViewModel, Book>(bookVm);
                 string id = _bookService.CreateBook(book);
-                fullBookVm.BookId = id;
-                return Json(new { Result = StrReprs.OK, Record = fullBookVm });
+                bookVm.BookId = id;
+                return Json(new { Result = StrReprs.OK, Record = bookVm });
             }
             catch (Exception ex)
             {

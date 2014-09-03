@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Library.Core.Models;
 using Library.Data.Infrastructure;
 using Library.Model.Models;
 using Library.Data.Repository;
@@ -9,16 +11,16 @@ namespace Library.Service
 {
     public interface IBookService              
     {
-        IEnumerable<Book> GetBooks();
-        IEnumerable<Book> GetBooks(string sorting);
-        IEnumerable<Book> GetBooks(int startIndex, int count);
-        IEnumerable<Book> GetBooks(int startIndex, int count, string sorting);
+        //IEnumerable<BookModel> GetBooks();
+        //IEnumerable<BookModel> GetBooks(string sorting);
+        //IEnumerable<BookModel> GetBooks(int startIndex, int count);
+        IEnumerable<BookModel> GetBooks(int startIndex, int count, string sorting);
         Book GetBook(string id);
-        string CreateBook(Book book);
-        void UpdateBook(Book book);
+        string CreateBook(BookModel book);
+        void UpdateBook(BookModel book);
         void DeleteBook(string id);
         int GetBookCount();
-        void Sorting(ref IEnumerable<Book> books, string sorting);
+        void Sorting(ref IEnumerable<BookModel> books, string sorting);
     }
 
     public class BookService : IBookService
@@ -33,26 +35,53 @@ namespace Library.Service
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Book> GetBooks()
-        {
-            return _bookRepository.GetAll();
-        }
+        //public IEnumerable<BookModel> GetBooks()
+        //{
+        //    return _bookRepository.GetAll();
+        //}
 
-        public IEnumerable<Book> GetBooks(string sorting)
-        {
-            var books = _bookRepository.GetAll();
-            Sorting(ref books, sorting);
-            return books;
-        }
+        //public IEnumerable<BookModel> GetBooks(string sorting)
+        //{
+        //    var books = _bookRepository.GetAll();
+        //    Sorting(ref books, sorting);
+        //    return books;
+        //}
 
-        public IEnumerable<Book> GetBooks(int startIndex, int count)
-        {
-            return _bookRepository.GetAll().Skip(startIndex).Take(count);
-        }
+        //public IEnumerable<BookModel> GetBooks(int startIndex, int count)
+        //{
+        //    return _bookRepository.GetAll().Skip(startIndex).Take(count);
+        //}
 
-        public IEnumerable<Book> GetBooks(int startIndex, int count, string sorting)
+        public IEnumerable<BookModel> GetBooks(int startIndex, int count, string sorting)
         {
-            var books = _bookRepository.GetAll().Skip(startIndex).Take(count);
+            var bookAmounts = from b in books
+                              join ba in _bookAmountService.GetBookAmounts() on b.BookId equals ba.BookId
+                              select new BookAmount
+                              {
+                                  BookAmountId = ba.BookAmountId,
+                                  BookId = ba.BookId,
+                                  Amount = ba.Amount
+                              };
+            var fullBookVms = from b in books
+                              join ba in bookAmounts on b.BookId equals ba.BookId
+                              select new FullBookViewModel
+                              {
+                                  BookId = b.BookId,
+                                  Title = b.Title,
+                                  Isbn = b.Isbn,
+                                  Year = b.Year,
+                                  Description = b.Description,
+                                  PagesAmount = b.PagesAmount,
+                                  PublishingHouse = b.PublishingHouse,
+                                  BookAmount = ba.Amount,
+                                  Authors = new List<AuthorViewModel>()
+                              };
+            foreach (var fullBookVm in fullBookVms)
+            {
+                fullBookVm.Authors.AddRange(_bookAuthorService.GetAuthorsByBookId(fullBookVm.BookId).Select(Mapper.Map<Author, AuthorViewModel>).ToList()); //не работает
+            }
+
+            IEnumerable<Book> books = _bookRepository.GetAll().Skip(startIndex).Take(count);
             Sorting(ref books, sorting);
             return books; 
         }
@@ -63,14 +92,14 @@ namespace Library.Service
             return book;
         }
 
-        public string CreateBook(Book book)
+        public string CreateBook(BookModel book)
         {
             book.BookId = UniqueStringKey.GetUniqueKey(LenOfKeyId);
             _bookRepository.Add(book);
             SaveChanges();
             return book.BookId;
         }
-        public void UpdateBook(Book book)
+        public void UpdateBook(BookModel book)
         {
             _bookRepository.Update(book);
             SaveChanges();
@@ -92,7 +121,7 @@ namespace Library.Service
             _unitOfWork.Commit();
         }
 
-        public void Sorting(ref IEnumerable<Book> books, string sorting)
+        public void Sorting(ref IEnumerable<BookModel> books, string sorting)
         {
             if (string.IsNullOrEmpty(sorting) || sorting.Equals("Title ASC"))
             {

@@ -7,7 +7,7 @@ using Library.Core.Utility;
 
 namespace Library.Service
 {
-    public interface IBookAmountService
+    internal interface IBookAmountService
     {
         IEnumerable<BookAmount> GetBookAmounts();
         IEnumerable<BookAmount> GetBookAmounts(string sorting);
@@ -21,7 +21,7 @@ namespace Library.Service
         void Sorting(ref IEnumerable<BookAmount> bookAmounts, string sorting);
     }
 
-    public class BookAmountService : IBookAmountService
+    internal class BookAmountService : IBookAmountService
     {
         private const int LenOfKeyId = 32;
         private readonly IBookAmountRepository _bookAmountRepository;

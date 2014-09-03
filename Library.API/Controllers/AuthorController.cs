@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using Library.API.Utility;
-using Library.Model.Models;
+using Library.Core.Models;
 using Library.Service;
 using Library.API.ViewModels;
 
@@ -24,7 +24,7 @@ namespace Library.API.Controllers
         {
             try
             {
-                IEnumerable<Author> authors = new List<Author>();
+                IEnumerable<AuthorModel> authors = new List<AuthorModel>();
                 if (filtering == "-1")
                     authors = _authorService.GetAuthors(startIndex, pageSize, sorting);
                 else

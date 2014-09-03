@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Library.Core.Models;
 using Library.Data.Infrastructure;
 using Library.Model.Models;
 using Library.Data.Repository;
@@ -10,17 +12,17 @@ namespace Library.Service
 {
     public interface IAuthorService
     {
-        IEnumerable<Author> GetAuthors();
-        IEnumerable<Author> GetAuthors(string sorting);
-        IEnumerable<Author> GetAuthors(int startIndex, int count);
-        IEnumerable<Author> GetAuthors(int startIndex, int count, string sorting);
-        IEnumerable<Author> GetAuthors(int count, string filtering);
-        Author GetAuthor(string id);
-        string CreateAuthor(Author author);
-        void UpdateAuthor(Author author);
+        IEnumerable<AuthorModel> GetAuthors();
+        IEnumerable<AuthorModel> GetAuthors(string sorting);
+        IEnumerable<AuthorModel> GetAuthors(int startIndex, int count);
+        IEnumerable<AuthorModel> GetAuthors(int startIndex, int count, string sorting);
+        IEnumerable<AuthorModel> GetAuthors(int count, string filtering);
+        AuthorModel GetAuthor(string id);
+        string CreateAuthor(AuthorModel author);
+        void UpdateAuthor(AuthorModel author);
         void DeleteAuthor(string id);
         int GetAuthorsCount();
-        void Sorting(ref IEnumerable<Author> authors, string sorting);
+        void Sorting(ref IEnumerable<AuthorModel> authors, string sorting);
     }
 
     public class AuthorService : IAuthorService
@@ -35,31 +37,37 @@ namespace Library.Service
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Author> GetAuthors()
+        public IEnumerable<AuthorModel> GetAuthors()
         {
-            return _authorRepository.GetAll();
+            IEnumerable<Author> authors = _authorRepository.GetAll();
+            List<AuthorModel> authorModels = authors.Select(Mapper.Map<Author, AuthorModel>).ToList();
+            return authorModels;
         }
 
-        public IEnumerable<Author> GetAuthors(string sorting)
+        public IEnumerable<AuthorModel> GetAuthors(string sorting)
         {
-            var authors = _authorRepository.GetAll();
-            Sorting(ref authors, sorting);
-            return authors;
+            IEnumerable<Author> authors = _authorRepository.GetAll();
+            IEnumerable<AuthorModel> authorModels = authors.Select(Mapper.Map<Author, AuthorModel>).ToList();
+            Sorting(ref authorModels, sorting);
+            return authorModels;
         }
 
-        public IEnumerable<Author> GetAuthors(int startIndex, int count)
+        public IEnumerable<AuthorModel> GetAuthors(int startIndex, int count)
         {
-            return _authorRepository.GetAll().Skip(startIndex).Take(count).ToList();
+            IEnumerable<Author> authors = _authorRepository.GetAll().Skip(startIndex).Take(count).ToList();
+            IEnumerable<AuthorModel> authorModels = authors.Select(Mapper.Map<Author, AuthorModel>).ToList();
+            return authorModels;
         }
 
-        public IEnumerable<Author> GetAuthors(int startIndex, int count, string sorting)
+        public IEnumerable<AuthorModel> GetAuthors(int startIndex, int count, string sorting)
         {
-            var authors = _authorRepository.GetAll().Skip(startIndex).Take(count);
-            Sorting(ref authors, sorting);
-            return authors;
+            IEnumerable<Author> authors = _authorRepository.GetAll().Skip(startIndex).Take(count).ToList();
+            IEnumerable<AuthorModel> authorModels = authors.Select(Mapper.Map<Author, AuthorModel>).ToList();
+            Sorting(ref authorModels, sorting);
+            return authorModels;
         }
 
-        public IEnumerable<Author> GetAuthors(int count, string filtering)
+        public IEnumerable<AuthorModel> GetAuthors(int count, string filtering)
         {
             IEnumerable<Author> authors = _authorRepository.GetAll();
             IEnumerable<Author> tempAuthors = new List<Author>();
@@ -83,25 +91,29 @@ namespace Library.Service
                     resultAuthors = resultAuthors.Distinct().ToList();
                 }
             }
-            return resultAuthors.Take(count);
+            resultAuthors = resultAuthors.Take(count);
+            IEnumerable<AuthorModel> authorModels = resultAuthors.Select(Mapper.Map<Author, AuthorModel>).ToList();
+            return authorModels;
         }
 
-        
-        public Author GetAuthor(string id)
+
+        public AuthorModel GetAuthor(string id)
         {
             var author = _authorRepository.GetById(id);
-            return author;
+            return Mapper.Map<Author,AuthorModel>(author);
         }
 
-        public string CreateAuthor(Author author)
+        public string CreateAuthor(AuthorModel authorModel)
         {
-            author.AuthorId = UniqueStringKey.GetUniqueKey(LenOfKeyId);
+            authorModel.AuthorId = UniqueStringKey.GetUniqueKey(LenOfKeyId);
+            Author author = Mapper.Map<AuthorModel, Author>(authorModel);
             _authorRepository.Add(author);
             SaveChanges();
             return author.AuthorId;
         }
-        public void UpdateAuthor(Author author)
+        public void UpdateAuthor(AuthorModel authorModel)
         {
+            Author author = Mapper.Map<AuthorModel, Author>(authorModel);
             _authorRepository.Update(author);
             SaveChanges();
         }
@@ -123,7 +135,7 @@ namespace Library.Service
             _unitOfWork.Commit();
         }
 
-        public void Sorting(ref IEnumerable<Author> authors, string sorting)
+        public void Sorting(ref IEnumerable<AuthorModel> authors, string sorting)
         {
             if (string.IsNullOrEmpty(sorting) || sorting.Equals("Name ASC"))
             {
@@ -132,14 +144,6 @@ namespace Library.Service
             else if (sorting.Equals("Name DESC"))
             {
                 authors = authors.OrderByDescending(p => p.Name);
-            }
-            else if (sorting.Equals("LastName ASC"))
-            {
-                authors = authors.OrderBy(p => p.LastName);
-            }
-            else if (sorting.Equals("LastName DESC"))
-            {
-                authors = authors.OrderByDescending(p => p.LastName);
             }
         }
     }
