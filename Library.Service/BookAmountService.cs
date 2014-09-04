@@ -3,11 +3,11 @@ using System.Linq;
 using Library.Data.Infrastructure;
 using Library.Model.Models;
 using Library.Data.Repository;
-using Library.Core.Utility;
+using Library.Domain.Utility;
 
 namespace Library.Service
 {
-    internal interface IBookAmountService
+    public interface IBookAmountService
     {
         IEnumerable<BookAmount> GetBookAmounts();
         IEnumerable<BookAmount> GetBookAmounts(string sorting);
@@ -21,7 +21,7 @@ namespace Library.Service
         void Sorting(ref IEnumerable<BookAmount> bookAmounts, string sorting);
     }
 
-    internal class BookAmountService : IBookAmountService
+    public class BookAmountService : IBookAmountService
     {
         private const int LenOfKeyId = 32;
         private readonly IBookAmountRepository _bookAmountRepository;

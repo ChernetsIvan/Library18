@@ -1,13 +1,16 @@
-﻿using Library.Data.Infrastructure;
+﻿using AutoMapper;
+using Library.Core.Models;
+using Library.Data.Infrastructure;
 using Library.Model.Models;
 using Library.Data.Repository;
-using Library.Core.Utility;
+using Library.Domain.Utility;
+using Library.Domain.Models;
 
 namespace Library.Service
 {
     public interface IBookQrCodeService
     {
-        BookQrCode GetBookQrCode(string id);
+        QrCodeModel GetBookQrCode(string id);
         BookQrCode GetBookQrCodeByBookId(string bookId);
         string CreateBookQrCode(Book book);
         void UpdateBookQrCode(Book book);
@@ -26,10 +29,11 @@ namespace Library.Service
             _unitOfWork = unitOfWork;
         }
 
-        public BookQrCode GetBookQrCode(string id)
+        public QrCodeModel GetBookQrCode(string id)
         {
             var bookQrCode = _bookQrCodeRepository.GetById(id);
-            return bookQrCode;
+            var qrCodeModel = Mapper.Map<BookQrCode, QrCodeModel>(bookQrCode);
+            return qrCodeModel;
         }
 
         public BookQrCode GetBookQrCodeByBookId(string bookId)

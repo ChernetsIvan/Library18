@@ -4,7 +4,7 @@ using System.Linq;
 using Library.Data.Infrastructure;
 using Library.Model.Models;
 using Library.Data.Repository;
-using Library.Core.Utility;
+using Library.Domain.Utility;
 using Library.Web.Utility;
 
 namespace Library.Service

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Library.Core.Models;
+using Library.Domain.Models;
 using Library.Data.Infrastructure;
 using Library.Model.Models;
 using Library.Data.Repository;
-using Library.Core.Utility;
+using Library.Domain.Utility;
 
 namespace Library.Service
 {
@@ -15,7 +15,7 @@ namespace Library.Service
         //IEnumerable<BookModel> GetBooks(string sorting);
         //IEnumerable<BookModel> GetBooks(int startIndex, int count);
         IEnumerable<BookModel> GetBooks(int startIndex, int count, string sorting);
-        Book GetBook(string id);
+        BookModel GetBook(string id);
         string CreateBook(BookModel book);
         void UpdateBook(BookModel book);
         void DeleteBook(string id);
@@ -28,11 +28,17 @@ namespace Library.Service
         private const int LenOfKeyId = 32;
         private readonly IBookRepository _bookRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IBookAmountService _bookAmountService;
+        private readonly IBookAuthorService _bookAuthorService;
+        private readonly IBookQrCodeService _bookQrCodeService;
 
-        public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork)
+        public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork, IBookAmountService bookAmountService, IBookAuthorService bookAuthorService, IBookQrCodeService bookQrCodeService)
         {
             _bookRepository = bookRepository;
             _unitOfWork = unitOfWork;
+            _bookAmountService = bookAmountService;
+            _bookAuthorService = bookAuthorService;
+            _bookQrCodeService = bookQrCodeService;
         }
 
         //public IEnumerable<BookModel> GetBooks()
@@ -52,55 +58,41 @@ namespace Library.Service
         //    return _bookRepository.GetAll().Skip(startIndex).Take(count);
         //}
 
-        public IEnumerable<BookModel> GetBooks(int startIndex, int count, string sorting)
+        public IEnumerable<BookModel> GetBooks(int startIndex, int count, string sorting) //temp
         {
-            var bookAmounts = from b in books
-                              join ba in _bookAmountService.GetBookAmounts() on b.BookId equals ba.BookId
-                              select new BookAmount
-                              {
-                                  BookAmountId = ba.BookAmountId,
-                                  BookId = ba.BookId,
-                                  Amount = ba.Amount
-                              };
-            var fullBookVms = from b in books
-                              join ba in bookAmounts on b.BookId equals ba.BookId
-                              select new FullBookViewModel
-                              {
-                                  BookId = b.BookId,
-                                  Title = b.Title,
-                                  Isbn = b.Isbn,
-                                  Year = b.Year,
-                                  Description = b.Description,
-                                  PagesAmount = b.PagesAmount,
-                                  PublishingHouse = b.PublishingHouse,
-                                  BookAmount = ba.Amount,
-                                  Authors = new List<AuthorViewModel>()
-                              };
-            foreach (var fullBookVm in fullBookVms)
+            IEnumerable<Book> books = _bookRepository.GetAll().Skip(startIndex).Take(count).ToList();          
+            IEnumerable<BookModel> bookModels = books.Select(Mapper.Map<Book, BookModel>).ToList();
+            foreach (var bookModel in bookModels)
             {
-                fullBookVm.Authors.AddRange(_bookAuthorService.GetAuthorsByBookId(fullBookVm.BookId).Select(Mapper.Map<Author, AuthorViewModel>).ToList()); //не работает
+                bookModel.BookAmount = _bookAmountService.GetBookAmount(bookModel.BookId).Amount;
+                bookModel.Authors.AddRange(
+                    _bookAuthorService.GetAuthorsByBookId(bookModel.BookId)
+                        .Select(Mapper.Map<Author, AuthorModel>)
+                        .ToList());
+                bookModel.QrCode = _bookQrCodeService.GetBookQrCode(bookModel.BookId);
             }
-
-            IEnumerable<Book> books = _bookRepository.GetAll().Skip(startIndex).Take(count);
-            Sorting(ref books, sorting);
-            return books; 
+            Sorting(ref bookModels, sorting);
+            return bookModels;
         }
 
-        public Book GetBook(string id)
+        public BookModel GetBook(string id)
         {
             var book = _bookRepository.GetById(id);
-            return book;
+            var bookModel = Mapper.Map<Book, BookModel>(book);
+            return bookModel;
         }
 
-        public string CreateBook(BookModel book)
+        public string CreateBook(BookModel bookModel)
         {
+            var book = Mapper.Map<BookModel, Book>(bookModel);
             book.BookId = UniqueStringKey.GetUniqueKey(LenOfKeyId);
             _bookRepository.Add(book);
             SaveChanges();
             return book.BookId;
         }
-        public void UpdateBook(BookModel book)
+        public void UpdateBook(BookModel bookModel)
         {
+            var book = Mapper.Map<BookModel, Book>(bookModel);
             _bookRepository.Update(book);
             SaveChanges();
         }

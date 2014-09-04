@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using Library.API.Utility;
 using Library.API.ViewModels;
+using Library.Domain.Models;
 using Library.Service;
 
 namespace Library.API.Controllers
@@ -28,8 +29,9 @@ namespace Library.API.Controllers
         {
             try
             {
-
-                return Json(new { Result = StrReprs.OK, Records = fullBookVms, TotalRecordCount = fullBookVms.Count() });
+                IEnumerable<BookModel> bookModels = _bookService.GetBooks(startIndex, pageSize, sorting);
+                IEnumerable<BookViewModel> bookViewModels = bookModels.Select(Mapper.Map<BookModel, BookViewModel>).ToList();
+                return Json(new { Result = StrReprs.OK, Records = bookViewModels, TotalRecordCount = bookViewModels.Count() });
             }
             catch (Exception ex)
             {
@@ -49,8 +51,8 @@ namespace Library.API.Controllers
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = GetErrorsFromModelState() });
                 }
-                Book book = Mapper.Map<BookViewModel, Book>(bookVm);
-                string id = _bookService.CreateBook(book);
+                var bookModel = Mapper.Map<BookViewModel, BookModel>(bookVm);
+                string id = _bookService.CreateBook(bookModel);
                 bookVm.BookId = id;
                 return Json(new { Result = StrReprs.OK, Record = bookVm });
             }
@@ -72,7 +74,7 @@ namespace Library.API.Controllers
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = GetErrorsFromModelState() });
                 }
-                Author author = Mapper.Map<AuthorViewModel, Author>(authorVm);
+                var author = Mapper.Map<AuthorViewModel, AuthorModel>(authorVm);
                 _authorService.UpdateAuthor(author);
                 return Json(new { Result = StrReprs.OK });
             }

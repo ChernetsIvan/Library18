@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Data", "Library.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Model", "Library.Model\Library.Model.csproj", "{4D4923F5-548C-4D13-859D-7F5E9699FACD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Core", "Library.Core\Library.Core.csproj", "{B1053A2D-A1EA-412F-BA95-19CE794F8891}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Domain", "Library.Core\Library.Domain.csproj", "{B1053A2D-A1EA-412F-BA95-19CE794F8891}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.API.Tests", "Library.API.Tests\Library.API.Tests.csproj", "{E5049FB4-92E4-4AD4-802F-4E44AD7B65C8}"
 EndProject

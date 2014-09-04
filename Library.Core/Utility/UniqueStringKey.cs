@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library.Core.Utility
+namespace Library.Domain.Utility
 {
     public static class UniqueStringKey
     {

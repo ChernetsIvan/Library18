@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Library.Core.Models;
+using Library.Domain.Models;
 using Library.Data.Infrastructure;
 using Library.Model.Models;
 using Library.Data.Repository;
-using Library.Core.Utility;
+using Library.Domain.Utility;
 
 namespace Library.Service
 {

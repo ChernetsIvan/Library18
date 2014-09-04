@@ -14,8 +14,6 @@ namespace Library.Data.Configuration
             Property(b => b.Description).IsOptional();
             Property(b => b.PagesAmount).IsOptional();
             Property(b => b.PublishingHouse).IsOptional();
-            Property(b => b.QrImageData).IsOptional();
-            Property(b => b.QrImageMimeType).IsOptional();
         }
     }
 }

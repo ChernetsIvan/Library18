@@ -1,4 +1,7 @@
-﻿namespace Library.Model.Models
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Library.Model.Models
 {
     public class Book
     {
@@ -9,7 +12,9 @@
         public string Description { get; set; }
         public int PagesAmount { get; set; }
         public string PublishingHouse { get; set; }
-        public byte[] QrImageData { get; set; }
-        public string QrImageMimeType { get; set; }
+        public string BookQrCodeId { get; set; }
+        public virtual BookQrCode BookQrCode { get; set; } //Foreign key
+        public virtual ICollection<Author> Authors { get; set; }
+        public virtual BookAmount BookAmount { get; set; }
     }
 }

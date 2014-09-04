@@ -1,4 +1,4 @@
-﻿namespace Library.Core.Common
+﻿namespace Library.Domain.Common
 {
     /// <summary>
     /// Describes the result of a validation of a potential change through a business service.

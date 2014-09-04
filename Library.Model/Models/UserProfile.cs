@@ -1,4 +1,7 @@
-﻿namespace Library.Model.Models
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Library.Model.Models
 {
     public class UserProfile
     {
@@ -14,6 +17,6 @@
         public string PlaceDescription { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
-
+        public virtual ICollection<Book> Books { get; set; }
     }
 }

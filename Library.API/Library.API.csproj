@@ -242,9 +242,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library.Core\Library.Core.csproj">
+    <ProjectReference Include="..\Library.Core\Library.Domain.csproj">
       <Project>{b1053a2d-a1ea-412f-ba95-19ce794f8891}</Project>
-      <Name>Library.Core</Name>
+      <Name>Library.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Data\Library.Data.csproj">
       <Project>{23b3d0d9-0f5c-4fd7-ba7e-a9e0c53a86c9}</Project>

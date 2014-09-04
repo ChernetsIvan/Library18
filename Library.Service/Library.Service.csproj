@@ -70,8 +70,8 @@
     <Compile Include="BookQrCodeService.cs" />
     <Compile Include="BookService.cs" />
     <Compile Include="Mappers\AutoMapperConfiguration.cs" />
-    <Compile Include="Mappers\BusinessModelToDbModelMappingProfile.cs" />
-    <Compile Include="Mappers\DbModelToBusinessModelMappingProfile.cs" />
+    <Compile Include="Mappers\DomainModelToDbModelMappingProfile.cs" />
+    <Compile Include="Mappers\DbModelToDomainModelMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -83,9 +83,9 @@
     <Compile Include="Utility\BookAuthorComparer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library.Core\Library.Core.csproj">
+    <ProjectReference Include="..\Library.Core\Library.Domain.csproj">
       <Project>{b1053a2d-a1ea-412f-ba95-19ce794f8891}</Project>
-      <Name>Library.Core</Name>
+      <Name>Library.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Data\Library.Data.csproj">
       <Project>{23b3d0d9-0f5c-4fd7-ba7e-a9e0c53a86c9}</Project>

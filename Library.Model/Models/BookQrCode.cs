@@ -7,6 +7,5 @@
         public virtual Book Book { get; set; } //Foreign key
         public byte[] QrImageData { get; set; }
         public string QrImageMimeType { get; set; }
-
     }
 }

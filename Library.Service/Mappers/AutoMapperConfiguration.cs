@@ -8,8 +8,8 @@ namespace Library.Service.Mappers
         {
             Mapper.Initialize(x =>
             {
-                x.AddProfile<BusinessModelToDbModelMappingProfile>();
-                x.AddProfile<DbModelToBusinessModelMappingProfile>();
+                x.AddProfile<DomainModelToDbModelMappingProfile>();
+                x.AddProfile<DbModelToDomainModelMappingProfile>();
             });
         }
     }

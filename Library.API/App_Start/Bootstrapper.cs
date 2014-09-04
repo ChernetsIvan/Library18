@@ -6,7 +6,6 @@ using Library.API.Mappers;
 using Library.Data;
 using Library.Data.Infrastructure;
 using Library.Data.Repository;
-using Library.Model.Models;
 using Library.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using MessagingToolkit.QRCode.Codec;
 
-namespace Library.Core.Utility
+namespace Library.Domain.Utility
 {
     public static class QRcodeGenerator
     {

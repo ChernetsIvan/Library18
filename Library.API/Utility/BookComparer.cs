@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Library.Core.Models;
+using Library.Domain.Models;
 
 namespace Library.API.Utility
 {

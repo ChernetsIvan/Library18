@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using Library.Core.Models;
 
-namespace Library.Core.Models
+namespace Library.Domain.Models
 {
     public class BookModel
     {
         public string BookId { get; set; }
-        public List<AuthorModel> Authors { get; set; }
         public string Title { get; set; }
         public string Isbn { get; set; }
         public int Year { get; set; }
@@ -13,5 +13,7 @@ namespace Library.Core.Models
         public int PagesAmount { get; set; }
         public string PublishingHouse { get; set; }
         public int BookAmount { get; set; }
+        public List<AuthorModel> Authors { get; set; }
+        public QrCodeModel QrCode { get; set; }      
     }
 }

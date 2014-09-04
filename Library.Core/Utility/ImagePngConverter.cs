@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Drawing;
 
-namespace Library.Core.Utility
+namespace Library.Domain.Utility
 {
     public static class ImagePngConverter
     {

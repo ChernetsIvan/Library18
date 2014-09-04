@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Library.API.ViewModels;
-using Library.Core.Models;
+using Library.Domain.Models;
 
 namespace Library.API.Mappers
 {

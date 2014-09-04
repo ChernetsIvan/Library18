@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using Library.API.Utility;
-using Library.Core.Models;
+using Library.Domain.Models;
 using Library.Service;
 using Library.API.ViewModels;
 
@@ -24,13 +24,13 @@ namespace Library.API.Controllers
         {
             try
             {
-                IEnumerable<AuthorModel> authors = new List<AuthorModel>();
+                IEnumerable<AuthorModel> authorModels = new List<AuthorModel>();
                 if (filtering == "-1")
-                    authors = _authorService.GetAuthors(startIndex, pageSize, sorting);
+                    authorModels = _authorService.GetAuthors(startIndex, pageSize, sorting);
                 else
-                    authors = _authorService.GetAuthors(pageSize, filtering);
+                    authorModels = _authorService.GetAuthors(pageSize, filtering);
 
-                List<AuthorViewModel> authorVms = authors.Select(Mapper.Map<Author, AuthorViewModel>).ToList();
+                IEnumerable<AuthorViewModel> authorVms = authorModels.Select(Mapper.Map<AuthorModel, AuthorViewModel>).ToList();
                 return Json(new { Result = StrReprs.OK, Records = authorVms, TotalRecordCount = _authorService.GetAuthorsCount() });
             }
             catch (Exception ex)
@@ -51,8 +51,8 @@ namespace Library.API.Controllers
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = GetErrorsFromModelState() });
                 }                              
-                Author author = Mapper.Map<AuthorViewModel, Author>(authorVm);
-                string id = _authorService.CreateAuthor(author);
+                AuthorModel authorModel = Mapper.Map<AuthorViewModel, AuthorModel>(authorVm);
+                string id = _authorService.CreateAuthor(authorModel);
                 authorVm.AuthorId = id;
                 return Json(new { Result = StrReprs.OK, Record = authorVm });
             }
@@ -74,7 +74,7 @@ namespace Library.API.Controllers
                 {
                     return Json(new { Result = StrReprs.ERROR, Message = GetErrorsFromModelState() });
                 }               
-                Author author = Mapper.Map<AuthorViewModel, Author>(authorVm);
+                AuthorModel author = Mapper.Map<AuthorViewModel, AuthorModel>(authorVm);
                 _authorService.UpdateAuthor(author);
                 return Json(new { Result = StrReprs.OK });
             }
