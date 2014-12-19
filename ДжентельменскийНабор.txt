@@ -1,4 +1,11 @@
-ProcessExplorer
+===========================================================
+Instructions
+(t)___rutracker.org
+(p)___just myself package (was on rutracker, but deleted or another reason)
+(o)___official site, because it is freeware or another reason
+([address])___other - because unique address
+=============================================================
+ProcessExplorer (_http://technet.microsoft.com/en-us/sysinternals/ (? Win7,8)
 Firefox
 uTorrent 1.8.2
 AdBlock Plus
@@ -27,5 +34,6 @@ Freelancer
 Казаки - Снова война
 Elasto Mania
 
-Sticky Notes
+Sticky Notes (Win8)
 RDP
+Resource Monitor (Win8)
