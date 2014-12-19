@@ -1,5 +1,31 @@
-Firefox
 ProcessExplorer
+Firefox
+uTorrent 1.8.2
+AdBlock Plus
 Skype
 XnView
 QTranslate
+streamWriter
+Adobe Flash Player
+Microsoft Silverlight
+Microsoft Office 2003
+Microsoft Office Visio 2003
+PuttY
+Zune
+FileZilla
+QDictionary
+Notepad2
+Notepad++
+HWInfo32
+CPU-Z
+SD-Formatter
+STDU Viewer
+Oracle VM VirtualBox
+
+Космические рейнджеры
+Freelancer
+Казаки - Снова война
+Elasto Mania
+
+Sticky Notes
+RDP
